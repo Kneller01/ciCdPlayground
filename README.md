@@ -13,6 +13,15 @@ Serve at localhost:8081 with `yarn dev`
 
 Run tests with `yarn test` and `yarn test:e2e`
 
+## CI test results
+
+The GitHub Actions CI workflow publishes Jest and Cypress JUnit results in the
+workflow run's job summary and a **Test results** check, even when tests fail.
+Fork and Dependabot pull requests receive the job summary only because their
+tokens cannot write checks. The XML reports are also available in the
+**test-results** artifact. Only suites that ran are included; integration tests
+are skipped if unit tests or the build fail.
+
 **NOTES**:
 
 - For participants:
