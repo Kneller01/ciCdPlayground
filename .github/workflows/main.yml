@@ -44,3 +44,26 @@ jobs:
         name: Integration test results
         path: reports/cypress-junit.xml
         reporter: java-junit
+    - name: Configure Pages
+      if: github.ref == 'refs/heads/master' && github.event_name != 'pull_request'
+      uses: actions/configure-pages@v5
+    - name: Upload Pages artifact
+      if: github.ref == 'refs/heads/master' && github.event_name != 'pull_request'
+      uses: actions/upload-pages-artifact@v3
+      with:
+        path: public
+
+  deploy:
+    if: github.ref == 'refs/heads/master' && github.event_name != 'pull_request'
+    needs: build
+    runs-on: ubuntu-latest
+    concurrency:
+      group: pages
+      cancel-in-progress: false
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+    - name: Deploy to GitHub Pages
+      id: deployment
+      uses: actions/deploy-pages@v4

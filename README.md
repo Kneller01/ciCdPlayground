@@ -21,6 +21,17 @@ checks, including when tests fail. Only suites that ran are reported; integratio
 tests are skipped if unit tests or the build fail. Reporting is skipped for fork
 and Dependabot pull requests because their tokens cannot write checks.
 
+## GitHub Pages
+
+Set **Settings > Pages > Build and deployment > Source** to **GitHub Actions**.
+The existing **CI** workflow publishes the built `public` directory to GitHub
+Pages after the build and tests succeed on `master`. Pull requests and other
+branches run CI without deploying.
+
+Commit and push changes to `master` to publish, or select **Actions > CI > Run
+workflow** and choose `master` to redeploy manually.
+The site is available at <https://kneller01.github.io/ciCdPlayground/>.
+
 **NOTES**:
 
 - For participants:
