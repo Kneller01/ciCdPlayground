@@ -3,7 +3,7 @@ import App from "./App.svelte";
 new App({
   target: document.body,
   props: {
-    // What's your name?
+    // What's your name??
     name: "James Butler",
     // In the following fiels you can either give a single string,
     // or an array of bullet points
