@@ -32,10 +32,11 @@ pipeline {
                     steps {
                         sh 'yarn test:e2e'
                     }
-                        always {
-                                junit testResults: 'reports/cypress-junit*.xml'
+                        post {
+                                always {
+                                    junit testResults: 'reports/cypress-junit*.xml'
+                                }
                             }
-                        }
                 }
 
         stage('deploy') {
