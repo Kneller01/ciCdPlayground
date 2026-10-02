@@ -1,4 +1,3 @@
-environment { TERM = 'xterm'; NO_COLOR = '1' }
 pipeline {
     agent any
     tools {
