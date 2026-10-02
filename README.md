@@ -15,12 +15,11 @@ Run tests with `yarn test` and `yarn test:e2e`
 
 ## CI test results
 
-The GitHub Actions CI workflow publishes Jest and Cypress JUnit results in the
-workflow run's job summary and a **Test results** check, even when tests fail.
-Fork and Dependabot pull requests receive the job summary only because their
-tokens cannot write checks. The XML reports are also available in the
-**test-results** artifact. Only suites that ran are included; integration tests
-are skipped if unit tests or the build fail.
+The GitHub Actions CI workflow uses `dorny/test-reporter` to publish Jest and
+Cypress JUnit reports as **Unit test results** and **Integration test results**
+checks, including when tests fail. Only suites that ran are reported; integration
+tests are skipped if unit tests or the build fail. Reporting is skipped for fork
+and Dependabot pull requests because their tokens cannot write checks.
 
 **NOTES**:
 

@@ -25,27 +25,22 @@ jobs:
     - name: Install
       run: yarn
     - name: Unit tests
-      id: unit_tests
       run: yarn test
     - name: Build
       run: yarn build
     - name: Integration tests
       run: yarn test:e2e
-    - name: Upload test results
-      if: ${{ !cancelled() && hashFiles('reports/*-junit.xml') != '' }}
-      uses: actions/upload-artifact@v4
+    - name: Report unit tests
+      if: ${{ !cancelled() && hashFiles('reports/jest-junit.xml') != '' && github.actor != 'dependabot[bot]' && (github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == github.repository) }}
+      uses: dorny/test-reporter@v1
       with:
-        name: test-results
-        path: reports/*-junit.xml
-        if-no-files-found: error
-    - name: Publish test results
-      if: ${{ !cancelled() && (steps.unit_tests.outcome == 'success' || steps.unit_tests.outcome == 'failure') }}
-      uses: EnricoMi/publish-unit-test-result-action@v2
+        name: Unit test results
+        path: reports/jest-junit.xml
+        reporter: jest-junit
+    - name: Report integration tests
+      if: ${{ !cancelled() && hashFiles('reports/cypress-junit.xml') != '' && github.actor != 'dependabot[bot]' && (github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == github.repository) }}
+      uses: dorny/test-reporter@v1
       with:
-        files: reports/*-junit.xml
-        check_name: Test results
-        check_run: ${{ github.actor != 'dependabot[bot]' && (github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == github.repository) }}
-        comment_mode: "off"
-        compare_to_earlier_commit: false
-        job_summary: true
-        action_fail_on_inconclusive: true
+        name: Integration test results
+        path: reports/cypress-junit.xml
+        reporter: java-junit
