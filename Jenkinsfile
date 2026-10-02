@@ -1,3 +1,4 @@
+environment { TERM = 'xterm'; NO_COLOR = '1' }
 pipeline {
     agent any
     tools {
@@ -15,6 +16,11 @@ pipeline {
                             steps {
                                 sh 'yarn test'
                             }
+                            post {
+                                    always {
+                                        junit testResults: 'reports/jest-junit*.xml'
+                                    }
+                                }
                         }
 
         stage('build') {
@@ -27,6 +33,10 @@ pipeline {
                     steps {
                         sh 'yarn test:e2e'
                     }
+                        always {
+                                junit testResults: 'reports/cypress-junit*.xml'
+                            }
+                        }
                 }
 
         stage('deploy') {
