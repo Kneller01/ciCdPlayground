@@ -12,15 +12,10 @@ pipeline {
         }
 
         stage('test') {
-                            steps {
-                                sh 'yarn test'
-                            }
-                            post {
-                                    always {
-                                        junit testResults: 'reports/jest-junit*.xml'
-                                    }
-                                }
-                        }
+            steps {
+                sh 'yarn test'
+            }
+        }
 
         stage('build') {
             steps {
@@ -29,15 +24,10 @@ pipeline {
         }
 
         stage('test:e2e') {
-                    steps {
-                        sh 'yarn test:e2e'
-                    }
-                        post {
-                                always {
-                                    junit testResults: 'reports/cypress-junit*.xml'
-                                }
-                            }
-                }
+            steps {
+                sh 'yarn test:e2e'
+            }
+        }
 
         stage('deploy') {
             steps {
@@ -63,6 +53,12 @@ pipeline {
                     profileName: 'role-based-access', 
                     userMetadata: []
             }
+        }
+    }
+
+    post {
+        always {
+            junit testResults: 'reports/jest-junit*.xml,reports/cypress-junit*.xml'
         }
     }
 }
