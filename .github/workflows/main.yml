@@ -45,16 +45,16 @@ jobs:
         path: reports/cypress-junit.xml
         reporter: java-junit
     - name: Configure Pages
-      if: github.ref == 'refs/heads/master' && github.event_name != 'pull_request'
+      if: github.ref == 'refs/heads/master' && github.event_name != 'pull_request' && vars.DEPLOY_PAGES != 'false'
       uses: actions/configure-pages@v5
     - name: Upload Pages artifact
-      if: github.ref == 'refs/heads/master' && github.event_name != 'pull_request'
+      if: github.ref == 'refs/heads/master' && github.event_name != 'pull_request' && vars.DEPLOY_PAGES != 'false'
       uses: actions/upload-pages-artifact@v3
       with:
         path: public
 
   deploy:
-    if: github.ref == 'refs/heads/master' && github.event_name != 'pull_request'
+    if: github.ref == 'refs/heads/master' && github.event_name != 'pull_request' && vars.DEPLOY_PAGES != 'false'
     needs: build
     runs-on: ubuntu-latest
     concurrency:

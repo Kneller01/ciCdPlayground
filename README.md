@@ -28,8 +28,16 @@ The existing **CI** workflow publishes the built `public` directory to GitHub
 Pages after the build and tests succeed on `master`. Pull requests and other
 branches run CI without deploying.
 
+Publication is enabled by default. To disable it, create a repository variable
+named `DEPLOY_PAGES` with the value `false` under **Settings > Secrets and
+variables > Actions > Variables**. Set it to `true` or delete the variable to
+re-enable publication. Disabling publication skips Pages configuration, artifact
+upload, and deployment, but still runs the build and tests. It does not remove
+the already published site.
+
 Commit and push changes to `master` to publish, or select **Actions > CI > Run
 workflow** and choose `master` to redeploy manually.
+Changing the variable does not trigger a workflow run.
 The site is available at <https://kneller01.github.io/ciCdPlayground/>.
 
 **NOTES**:
